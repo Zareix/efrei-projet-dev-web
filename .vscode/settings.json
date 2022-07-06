@@ -6,5 +6,20 @@
   },
   "editor.quickSuggestions": {
     "strings": true
-  }
+  },
+  "sqltools.connections": [
+    {
+      "mysqlOptions": {
+        "authProtocol": "default"
+      },
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 3306,
+      "driver": "MariaDB",
+      "name": "docker",
+      "database": "projet_dev_web",
+      "username": "user",
+      "password": "password"
+    }
+  ]
 }
