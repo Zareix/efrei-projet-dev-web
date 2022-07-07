@@ -24,7 +24,7 @@ async function create(pret) {
     `INSERT INTO PRETS
     (idetu, codebarre, datedebutpret, datefinpret, idres)
       VALUES
-    (idetu='${pret.idetu}', codebarre='${pret.codebarre}', datedebutpret='${pret.datedebutpret}', datefinpret='${pret.datefinpret}', idres='${pret.idres}')`
+    ('${pret.idetu}', '${pret.codebarre}', '${pret.datedebutpret}', '${pret.datefinpret}', '${pret.idres}')`
   );
 
   let message = 'Error in creating pret';

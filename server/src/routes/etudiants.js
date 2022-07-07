@@ -35,8 +35,7 @@ router.delete('/:idetu', async function (req, res, next) {
 router.post('/', async function (req, res, next) {
   try {
     const data = await etudiants.create(req.body);
-    if (!data.id) return res.status(500).send('Error');
-    res.send(data);
+    res.sendStatus(200);
   } catch (err) {
     console.error('Error while creating etudiants ', err.message);
     next(err);

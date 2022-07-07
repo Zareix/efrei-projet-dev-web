@@ -4,32 +4,28 @@ import { reactive, ref } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 
-const materiels = ref([]);
+const responsables = ref([]);
 
-const codebarre = ref("");
-const nommat = ref("");
-const descriptionmat = ref("");
-const dateachatmat = ref("");
-const prixachatmat = ref(0);
-const fournisseurmat = ref("");
+const nomres = ref("");
+const prenomres = ref("");
+const loginres = ref("");
+const motdepasseres = ref("");
 
 const editing = ref({});
 
 const fetchData = () => {
   axios
-    .get("http://localhost:3001/api/materiels")
-    .then((res) => (materiels.value = res.data));
+    .get("http://localhost:3001/api/responsables")
+    .then((res) => (responsables.value = res.data));
 };
 
 const save = () => {
   axios
-    .post("http://localhost:3001/api/materiels", {
-      codebarre: codebarre.value,
-      nommat: nommat.value,
-      descriptionmat: descriptionmat.value,
-      dateachatmat: dateachatmat.value,
-      prixachatmat: prixachatmat.value,
-      fournisseurmat: fournisseurmat.value,
+    .post("http://localhost:3001/api/responsables", {
+      nomres: nomres.value,
+      prenomres: prenomres.value,
+      loginres: loginres.value,
+      motdepasseres: motdepasseres.value,
     })
     .then((res) => {
       fetchData();
@@ -37,7 +33,7 @@ const save = () => {
 };
 
 const remove = (id) => {
-  axios.delete("http://localhost:3001/api/materiels/" + id).then((res) => {
+  axios.delete("http://localhost:3001/api/responsables/" + id).then((res) => {
     fetchData();
   });
 };
@@ -45,7 +41,7 @@ const remove = (id) => {
 const edit = () => {
   axios
     .patch(
-      "http://localhost:3001/api/materiels/" + editing.value.codebarre,
+      "http://localhost:3001/api/responsables/" + editing.value.idres,
       editing.value
     )
     .then((res) => {
@@ -62,58 +58,50 @@ fetchData();
 
 <template>
   <Layout>
-    <h1>Materiels</h1>
+    <h1>Responsables</h1>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table class="w-full text-left text-sm text-gray-500 dark:text-gray-400">
         <thead
           class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400"
         >
           <tr>
-            <th scope="col" class="px-6 py-3">Code barre</th>
+            <th scope="col" class="px-6 py-3">Id</th>
             <th scope="col" class="px-6 py-3">Nom</th>
-            <th scope="col" class="px-6 py-3">Description</th>
-            <th scope="col" class="px-6 py-3">Date d'achat</th>
-            <th scope="col" class="px-6 py-3">Prix d'achat</th>
-            <th scope="col" class="px-6 py-3">Fournisseur</th>
+            <th scope="col" class="px-6 py-3">Prénom</th>
+            <th scope="col" class="px-6 py-3">Login</th>
             <th scope="col" class="px-6 py-3">Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr
             class="border-b odd:bg-white even:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 odd:dark:bg-gray-800 even:dark:bg-gray-700"
-            v-for="materiel in materiels"
+            v-for="responsable in responsables"
           >
             <th
               scope="row"
               class="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
             >
-              {{ materiel.codebarre }}
+              {{ responsable.idres }}
             </th>
             <td class="px-6 py-4">
-              {{ materiel.nommat }}
+              {{ responsable.nomres }}
             </td>
             <td class="px-6 py-4">
-              {{ materiel.descriptionmat }}
+              {{ responsable.prenomres }}
             </td>
             <td class="px-6 py-4">
-              {{ materiel.dateachatmat }}
-            </td>
-            <td class="px-6 py-4">
-              {{ materiel.prixachatmat }}
-            </td>
-            <td class="px-6 py-4">
-              {{ materiel.fournisseurmat }}
+              {{ responsable.loginres }}
             </td>
             <td class="flex gap-2 px-6 py-4 text-right">
               <button
                 class="font-medium text-blue-600 hover:underline dark:text-blue-500"
-                @click="editing = { ...materiel }"
+                @click="editing = { ...responsable }"
               >
                 Edit
               </button>
               <button
                 class="font-medium text-red-600 hover:underline dark:text-red-500"
-                @click="remove(materiel.codebarre)"
+                @click="remove(responsable.idres)"
               >
                 Delete
               </button>
@@ -125,65 +113,43 @@ fetchData();
             <th
               scope="row"
               class="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
-            >
-              <input
-                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                placeholder="Code barre"
-                required
-                type="text"
-                id="codebarre"
-                v-model="codebarre"
-              />
-            </th>
+            ></th>
             <td class="px-6 py-4">
               <input
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                 placeholder="Nom"
                 required
                 type="text"
-                id="nommat"
-                v-model="nommat"
+                id="nomres"
+                v-model="nomres"
               />
             </td>
             <td class="px-6 py-4">
               <input
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                placeholder="Description"
+                placeholder="Prénom"
                 required
                 type="text"
-                id="descriptionmat"
-                v-model="descriptionmat"
+                id="prenomres"
+                v-model="prenomres"
               />
             </td>
             <td class="px-6 py-4">
               <input
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                placeholder="Date achat"
+                placeholder="Login"
                 required
                 type="text"
-                id="dateachatmat"
-                v-model="dateachatmat"
+                id="loginres"
+                v-model="loginres"
               />
-            </td>
-            <td class="px-6 py-4">
               <input
-                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                placeholder="Prix"
+                class="mt-2 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                placeholder="Mot de passe"
                 required
-                type="number"
-                min="0"
-                id="prixachatmat"
-                v-model="prixachatmat"
-              />
-            </td>
-            <td class="px-6 py-4">
-              <input
-                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                placeholder="Fournisseur"
-                required
-                type="text"
-                id="fournisseurmat"
-                v-model="fournisseurmat"
+                type="password"
+                id="motdepasseres"
+                v-model="motdepasseres"
               />
             </td>
             <td class="px-6 py-4 text-right">
@@ -198,7 +164,7 @@ fetchData();
         </tbody>
       </table>
     </div>
-    <div v-if="editing.codebarre">
+    <div v-if="editing.idres">
       <div
         class="fixed inset-0 z-50 flex h-screen w-screen items-center justify-center bg-gray-900 bg-opacity-10"
       >
@@ -213,7 +179,7 @@ fetchData();
                 class="flex items-start justify-between rounded-t border-b p-4 dark:border-gray-600"
               >
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                  Editing {{ editing.codebarre }}
+                  Editing {{ editing.idres }}
                 </h3>
                 <button
                   type="button"
@@ -236,63 +202,33 @@ fetchData();
               </div>
               <div class="space-y-6 p-6">
                 <div class="mb-3">
-                  <label for="codebarre">Code barre</label>
+                  <label for="nomres">Nom</label>
                   <input
                     type="text"
                     class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                    placeholder="codebarre"
+                    placeholder="nomres"
                     required
-                    v-model="editing.codebarre"
+                    v-model="editing.nomres"
                   />
                 </div>
                 <div class="mb-3">
-                  <label for="nommat">Nom</label>
+                  <label for="prenomres">Prenom</label>
                   <input
                     type="text"
                     class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                    placeholder="nommat"
+                    placeholder="prenomres"
                     required
-                    v-model="editing.nommat"
+                    v-model="editing.prenomres"
                   />
                 </div>
                 <div class="mb-3">
-                  <label for="descriptionmat">Description</label>
+                  <label for="loginres">Login</label>
                   <input
                     type="text"
                     class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                    placeholder="descriptionmat"
+                    placeholder="loginres"
                     required
-                    v-model="editing.descriptionmat"
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="dateachatmat">Date achat</label>
-                  <input
-                    type="text"
-                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                    placeholder="dateachatmat"
-                    required
-                    v-model="editing.dateachatmat"
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="prixachatmat">Prix achat</label>
-                  <input
-                    type="text"
-                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                    placeholder="prixachatmat"
-                    required
-                    v-model="editing.prixachatmat"
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="fournisseurmat">Fournisseur</label>
-                  <input
-                    type="text"
-                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                    placeholder="fournisseurmat"
-                    required
-                    v-model="editing.fournisseurmat"
+                    v-model="editing.loginres"
                   />
                 </div>
               </div>

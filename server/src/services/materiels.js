@@ -35,7 +35,7 @@ async function create(materiel) {
     `INSERT INTO MATERIELS
     (codebarre, nommat, descriptionmat, dateachatmat, prixachatmat, fournisseurmat)
       VALUES
-    (codebarre='${materiel.codebarre}', nommat='${materiel.nommat}', descriptionmat='${materiel.descriptionmat}', dateachatmat='${materiel.dateachatmat}', prixachatmat='${materiel.prixachatmat}', fournisseurmat='${materiel.fournisseurmat}')`
+    ('${materiel.codebarre}', '${materiel.nommat}', '${materiel.descriptionmat}', '${materiel.dateachatmat}', ${materiel.prixachatmat}, '${materiel.fournisseurmat}')`
   );
 
   let message = 'Error in creating materiel';
@@ -50,7 +50,7 @@ async function create(materiel) {
 async function update(codebarre, materiel) {
   const result = await db.query(
     `UPDATE MATERIELS
-      SET codebarre='${materiel.codebarre}', nommat='${materiel.nommat}', descriptionmat='${descriptionmat}', dateachatmat='${dateachatmat}', prixachatmat='${prixachatmat}', fournisseurmat='${fournisseurmat}'
+      SET codebarre='${materiel.codebarre}', nommat='${materiel.nommat}', descriptionmat='${materiel.descriptionmat}', dateachatmat='${materiel.dateachatmat}', prixachatmat='${materiel.prixachatmat}', fournisseurmat='${materiel.fournisseurmat}'
       WHERE codebarre='${codebarre}';`
   );
   return { done: result.affectedRows, id: result.insertId };

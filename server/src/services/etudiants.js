@@ -33,9 +33,9 @@ async function remove(idetu) {
 async function create(etudiant) {
   const result = await db.query(
     `INSERT INTO ETUDIANTS
-    (nometud, prenometu)
+    (nometu, prenometu)
       VALUES
-    (nometud='${etudiant.nometud}', prenometu='${etudiant.prenometu}')`
+    ('${etudiant.nometu}', '${etudiant.prenometu}')`
   );
 
   let message = 'Error in creating etudiant';
@@ -50,7 +50,7 @@ async function create(etudiant) {
 async function update(idetu, etudiant) {
   const result = await db.query(
     `UPDATE ETUDIANTS
-      SET nometud='${etudiant.nometud}', prenometu='${etudiant.prenometu}'
+      SET nometu='${etudiant.nometu}', prenometu='${etudiant.prenometu}'
       WHERE idetu='${idetu}';`
   );
   return { done: result.affectedRows, id: result.insertId };

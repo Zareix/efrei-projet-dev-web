@@ -4,12 +4,19 @@ import "flowbite";
 
 import "./global.css";
 
-import Home from "./routes/Home.vue";
 import Materiels from "./routes/Materiels.vue";
+import Responsables from "./routes/Responsables.vue";
+import Etudiants from "./routes/Etudiants.vue";
+import Prets from "./routes/Prets.vue";
+import Login from "./routes/Login.vue";
 
 const routes = [
-  { path: "/", component: Home },
+  { path: "/", redirect: "/materiels" },
+  { path: "/responsables", component: Responsables },
   { path: "/materiels", component: Materiels },
+  { path: "/etudiants", component: Etudiants },
+  { path: "/prets", component: Prets },
+  { path: "/login", component: Login },
 ];
 
 const router = createRouter({

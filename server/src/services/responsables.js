@@ -11,6 +11,17 @@ async function getAll() {
   return data;
 }
 
+async function login(loginres) {
+  const rows = await db.query(
+    `SELECT idres, nomres, prenomres, loginres, motdepasseres
+    FROM RESPONSABLES
+    WHERE loginres='${loginres}'`
+  );
+  const data = helper.emptyOrRows(rows);
+
+  return data;
+}
+
 async function get(idres) {
   const rows = await db.query(
     `SELECT idres, nomres, prenomres, loginres
@@ -35,7 +46,7 @@ async function create(responsable) {
     `INSERT INTO RESPONSABLES
     (nomres, prenomres, loginres, motdepasseres)
       VALUES
-    (nomres='${responsable.nomres}', prenomres='${responsable.prenomres}', loginres='${responsable.loginres}', motdepasseres='${responsable.motdepasseres}')`
+    ('${responsable.nomres}', '${responsable.prenomres}', '${responsable.loginres}', '${responsable.motdepasseres}')`
   );
 
   let message = 'Error in creating responsable';
@@ -62,4 +73,5 @@ module.exports = {
   create,
   update,
   get,
+  login,
 };

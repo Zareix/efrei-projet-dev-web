@@ -35,8 +35,7 @@ router.delete('/:codebarre', async function (req, res, next) {
 router.post('/', async function (req, res, next) {
   try {
     const data = await materiels.create(req.body);
-    if (!data.id) return res.status(500).send('Error');
-    res.send(data);
+    res.sendStatus(200);
   } catch (err) {
     console.error('Error while creating materiels ', err.message);
     next(err);

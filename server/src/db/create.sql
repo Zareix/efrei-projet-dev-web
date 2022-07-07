@@ -3,7 +3,7 @@ CREATE TABLE `RESPONSABLES` (
     `nomres` VARCHAR(42),
     `prenomres` VARCHAR(42),
     `loginres` VARCHAR(42),
-    `motdepasseres` VARCHAR(42),
+    `motdepasseres` VARCHAR(200),
     PRIMARY KEY (`idres`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
